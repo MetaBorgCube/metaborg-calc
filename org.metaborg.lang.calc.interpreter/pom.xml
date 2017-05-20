@@ -3,7 +3,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <modelVersion>4.0.0</modelVersion>
   <name>Calc Interpreter</name>
   <groupId>org.metaborg</groupId>
-  <artifactId>org.metaborg.calc.tiger.interpreter</artifactId>
+  <artifactId>org.metaborg.calc.interpreter</artifactId>
   <version>0.1</version>
   <build>
     <plugins>
@@ -28,11 +28,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <configuration>
               <filesets>
                 <fileset>
-                  <directory>src/main/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated</directory>
+                  <directory>src/main/java/org/metaborg/org/metaborg/calc/interpreter/generated</directory>
                   <includes>**/**</includes>
                 </fileset>
                 <fileset>
-                  <directory>src/test/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated/test</directory>
+                  <directory>src/test/java/org/metaborg/org/metaborg/calc/interpreter/generated/test</directory>
                   <includes>**/**</includes>
                 </fileset>
                 <fileset>
