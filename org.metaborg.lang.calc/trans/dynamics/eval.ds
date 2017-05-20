@@ -1,5 +1,5 @@
 module dynamics/eval
-imports src-gen/ds-signatures/calc-sig dynamics/natives
+imports src-gen/ds-signatures/Calc-sig dynamics/natives
 signature
   sorts Value
   sort aliases
