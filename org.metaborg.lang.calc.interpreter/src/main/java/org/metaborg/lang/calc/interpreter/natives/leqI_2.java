@@ -17,8 +17,8 @@ public abstract class leqI_2 extends TermBuild {
 	}
 
 	@Specialization
-	public int doInt(int left, int right) {
-		return left <= right ? 1 : 0;
+	public boolean doInt(int left, int right) {
+		return left <= right ? true : false;
 	}
 
 	public static TermBuild create(SourceSection source, TermBuild left,

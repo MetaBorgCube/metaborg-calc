@@ -17,8 +17,8 @@ public abstract class eqS_2 extends TermBuild {
 	}
 
 	@Specialization
-	public int doInt(String left, String right) {
-		return left.equals(right) ? 1 : 0;
+	public boolean doInt(String left, String right) {
+		return left.equals(right) ? true : false;
 	}
 
 	public static TermBuild create(SourceSection source, TermBuild left,
