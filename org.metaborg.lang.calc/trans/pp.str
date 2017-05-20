@@ -5,8 +5,8 @@ imports
   libstratego-gpp
   libspoofax/sdf/pp
   libspoofax/editor/refactoring/-
-  pp/calc-parenthesize
-  pp/calc-pp
+  //pp/Calc-parenthesize
+  pp/Calc-pp
 
 rules
 
@@ -18,6 +18,8 @@ rules
     ; result   := <pp-debug> node
 
 rules
+
+  parenthesize-calc = id
   
   pp-calc-string =
     parenthesize-calc
