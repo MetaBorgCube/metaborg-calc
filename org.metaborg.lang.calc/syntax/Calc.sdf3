@@ -1,4 +1,4 @@
-module calc
+module Calc
 imports Common
 context-free start-symbols Program
 sorts Program Exp
@@ -14,7 +14,7 @@ context-free syntax
   >
   Exp.Fun   = <\\ <ID> . <Exp>>
   Exp.App   = <<Exp> <Exp>> {left}
-  
+
   Exp.Int   = INT
   Exp.Mul   = <<Exp> * <Exp>> {left}
   Exp.Div   = <<Exp> / <Exp>> {left}
@@ -25,15 +25,15 @@ context-free syntax
   Exp.Neq   = <<Exp> != <Exp>> {non-assoc}
   Exp.Gt    = [[Exp] > [Exp]]  {non-assoc}
   Exp.Lt    = [[Exp] < [Exp]]  {non-assoc}
-  
+
   Exp.True  = <true>
   Exp.False = <false>
   Exp.Not   = <!<Exp>>
   Exp.And   = <<Exp> & <Exp>> {left}
   Exp.Or    = <<Exp> | <Exp>> {left}
   
-  Exp.If = 
-  <if(<Exp>) 
+  Exp.If =   
+  <if(<Exp>)
      <Exp> 
    else 
      <Exp>> 
@@ -45,9 +45,9 @@ context-free priorities
   
 sorts Type
 context-free syntax
-  Type.INT  = <Int>
-  Type.BOOL = <Bool>
-  Type.FUN  = [[Exp] -> [Exp]] {right}
+  Type.IntT  = <Int>
+  Type.BoolT = <Bool>
+  Type.FunT  = [[Exp] -> [Exp]] {right}
 
 template options
 
