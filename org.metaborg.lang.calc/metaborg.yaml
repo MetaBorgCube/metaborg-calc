@@ -1,5 +1,5 @@
 ---
-id: org.example:org.metaborg.lang.calc:0.1.0-SNAPSHOT
+id: org.metaborg:org.metaborg.lang.calc:0.1.0-SNAPSHOT
 name: Calc
 dependencies:
   compile:
