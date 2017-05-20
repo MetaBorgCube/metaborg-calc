@@ -1,6 +1,6 @@
 module statics/calc
 
-imports signatures/-
+imports signatures/Calc-sig
 
 rules
 
@@ -13,24 +13,24 @@ rules
   [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
      new s', {x} <- s', {x} : ty, s' -P-> s, [[ e1 ^ (s) : ty1 ]], [[ e2 ^ (s') : ty2 ]].
     
-  [[ Fun(x, e) ^ (s) : FUN(ty1, ty2) ]] :=
+  [[ Fun(x, e) ^ (s) : FunT(ty1, ty2) ]] :=
      new s', {x} <- s', {x} : ty1, s' -P-> s, [[ e ^ (s') : ty2 ]].
      
   [[ App(e1, e2) ^ (s) : ty2 ]] := 
-     [[ e1 ^ (s) : FUN(ty1, ty2) ]], [[ e2 ^ (s) : ty1 ]].
+     [[ e1 ^ (s) : FunT(ty1, ty2) ]], [[ e2 ^ (s) : ty1 ]].
     
-  [[ Int(x) ^ (s) : INT() ]].
+  [[ Int(x) ^ (s) : IntT() ]].
   
-  [[ Mul(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]]. 
-  [[ Add(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]]. 
-  [[ Sub(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].  
-  [[ Div(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
+  [[ Mul(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]]. 
+  [[ Add(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]]. 
+  [[ Sub(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].  
+  [[ Div(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
    
-  [[ Eq(e1, e2) ^ (s)  : BOOL() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
-  [[ Lt(e1, e2) ^ (s)  : BOOL() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
+  [[ Eq(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
+  [[ Lt(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
   
-  [[ True() ^ (s) : BOOL() ]].
-  [[ False() ^ (s) : BOOL() ]].
+  [[ True() ^ (s) : BoolT() ]].
+  [[ False() ^ (s) : BoolT() ]].
   
-  [[ If(e1, e2, e3) ^ (s)  : BOOL() ]] := 
-     [[ e1 ^ (s) : BOOL() ]], [[ e2 ^ (s) : t ]], [[ e3 ^ (s) : t ]].
+  [[ If(e1, e2, e3) ^ (s)  : BoolT() ]] := 
+     [[ e1 ^ (s) : BoolT() ]], [[ e2 ^ (s) : t ]], [[ e3 ^ (s) : t ]].
