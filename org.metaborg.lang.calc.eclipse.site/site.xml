@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.metaborg.lang.calc.eclipse.feature_0.1.0.qualifier.jar" id="org.metaborg.lang.calc.eclipse.feature" version="0.1.0.qualifier">
+      <category name="calc"/>
+   </feature>
+   <category-def name="calc" label="calc language Eclipse plugin">
+      <description>
+         calc language Eclipse plugin.
+      </description>
+   </category-def>
+</site>

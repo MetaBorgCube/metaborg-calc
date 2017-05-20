@@ -1,0 +1,54 @@
+module calc
+imports Common
+context-free start-symbols Program
+sorts Program Exp
+context-free syntax    
+  Program.Program = Exp
+  
+  Exp = <(<Exp>)> {bracket}
+  
+  Exp.Var = ID
+  Exp.Let = <
+    let <ID> = <Exp> 
+     in <Exp>
+  >
+  Exp.Fun   = <\\ <ID> . <Exp>>
+  Exp.App   = <<Exp> <Exp>> {left}
+  
+  Exp.Int   = INT
+  Exp.Mul   = <<Exp> * <Exp>> {left}
+  Exp.Div   = <<Exp> / <Exp>> {left}
+  Exp.Sub   = <<Exp> - <Exp>> {left}
+  Exp.Add   = <<Exp> + <Exp>> {left}
+  
+  Exp.Eq    = <<Exp> == <Exp>> {non-assoc}
+  Exp.Neq   = <<Exp> != <Exp>> {non-assoc}
+  Exp.Gt    = [[Exp] > [Exp]]  {non-assoc}
+  Exp.Lt    = [[Exp] < [Exp]]  {non-assoc}
+  
+  Exp.True  = <true>
+  Exp.False = <false>
+  Exp.Not   = <!<Exp>>
+  Exp.And   = <<Exp> & <Exp>> {left}
+  Exp.Or    = <<Exp> | <Exp>> {left}
+  
+  Exp.If = 
+  <if(<Exp>) 
+     <Exp> 
+   else 
+     <Exp>> 
+  
+context-free priorities
+  Exp.App > {left: Exp.Mul Exp.Div} > {left: Exp.Add Exp.Sub} 
+  > {non-assoc: Exp.Eq Exp.Neq Exp.Gt Exp.Lt}
+  > Exp.Not > Exp.And > Exp.Or > Exp.Let > Exp.Fun
+  
+sorts Type
+context-free syntax
+  Type.INT  = <Int>
+  Type.BOOL = <Bool>
+  Type.FUN  = [[Exp] -> [Exp]] {right}
+
+template options
+
+  ID = keyword {reject}

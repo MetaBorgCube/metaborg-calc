@@ -1,0 +1,15 @@
+
+/target/
+src/main/resources/specification.aterm
+src/main/resources/parsetable.tbl
+src/main/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated
+src/main/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated/terms
+src/main/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated/terms/build
+src/main/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated/terms/match
+src/test/java/org/metaborg/org/metaborg/calc/tiger/interpreter/generated/test
+/Calc.launch
+/TestCalc.launch
+/Calc (Daemon).launch
+/Calc-server
+/Calc-client
+/Calc

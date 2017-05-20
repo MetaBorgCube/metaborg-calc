@@ -1,0 +1,20 @@
+module transform
+
+imports
+  nabl2shared
+  nabl2runtime
+  transform/desugar
+  statics/calc
+  pp
+  
+rules // Desugaring
+  
+  // Desugar 
+  desugar-aterm: (selected, _, _, path, project-path) -> (filename, result)
+    with filename := <guarantee-extension(|"aterm")> path
+       ; result   := <desugar-all> selected
+
+  // Desugar and pretty-print
+  desugar-pp: (selected, _, _, path, project-path) -> (filename, result)
+    with filename := <guarantee-extension(|"desugared.calc")> path
+       ; result   := <desugar-all; pp-debug> selected

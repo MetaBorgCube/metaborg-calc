@@ -1,0 +1,8 @@
+module calc
+
+language calc
+
+test one [[
+let max = \x. \y. if(x > y) x else y in 
+  ! max 3 4 < x
+]] check has 2 error

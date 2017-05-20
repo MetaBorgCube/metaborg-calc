@@ -1,0 +1,17 @@
+module desugar
+
+imports signatures/-
+
+strategies
+
+  desugar-all = innermost(desugar)
+  
+rules
+
+  desugar : Neq(e1, e2) -> Not(Eq(e1, e2))
+  desugar : Gt(e1, e2) -> Lt(e2, e1)
+
+  desugar : Not(e) -> If(e, False(), True())
+  desugar : And(e1, e2) -> If(e1, e1, False())
+  desugar : Or(e1, e2) -> If(e1, True(), e2)
+  

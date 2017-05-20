@@ -1,0 +1,36 @@
+module statics/calc
+
+imports signatures/-
+
+rules
+
+  init ^ (s) := new s.
+
+  [[ Program(e) ^ (s) ]] := [[ e ^ (s) : t ]].
+    
+  [[ Var(x) ^ (s) : ty ]] := {x} -> s, {x} |-> d, d : ty.
+    
+  [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
+     new s', {x} <- s', {x} : ty, s' -P-> s, [[ e1 ^ (s) : ty1 ]], [[ e2 ^ (s') : ty2 ]].
+    
+  [[ Fun(x, e) ^ (s) : FUN(ty1, ty2) ]] :=
+     new s', {x} <- s', {x} : ty1, s' -P-> s, [[ e ^ (s') : ty2 ]].
+     
+  [[ App(e1, e2) ^ (s) : ty2 ]] := 
+     [[ e1 ^ (s) : FUN(ty1, ty2) ]], [[ e2 ^ (s) : ty1 ]].
+    
+  [[ Int(x) ^ (s) : INT() ]].
+  
+  [[ Mul(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]]. 
+  [[ Add(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]]. 
+  [[ Sub(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].  
+  [[ Div(e1, e2) ^ (s) : INT() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
+   
+  [[ Eq(e1, e2) ^ (s)  : BOOL() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
+  [[ Lt(e1, e2) ^ (s)  : BOOL() ]] := [[ e1 ^ (s) : INT() ]], [[ e2 ^ (s) : INT() ]].
+  
+  [[ True() ^ (s) : BOOL() ]].
+  [[ False() ^ (s) : BOOL() ]].
+  
+  [[ If(e1, e2, e3) ^ (s)  : BOOL() ]] := 
+     [[ e1 ^ (s) : BOOL() ]], [[ e2 ^ (s) : t ]], [[ e3 ^ (s) : t ]].

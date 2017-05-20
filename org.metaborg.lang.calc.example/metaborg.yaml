@@ -1,0 +1,13 @@
+---
+id: org.example:org.metaborg.lang.calc.example:0.1.0-SNAPSHOT
+name: calc
+dependencies:
+  compile:
+  - org.example:org.metaborg.lang.calc:0.1.0-SNAPSHOT
+debug:
+  typesmart: false
+runtime:
+  nabl2:
+    debug: analysis files
+build:
+  useBuildSystemSpec: true

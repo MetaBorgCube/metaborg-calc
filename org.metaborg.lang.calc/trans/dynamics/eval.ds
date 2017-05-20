@@ -1,0 +1,49 @@
+module dynamics/eval
+imports src-gen/ds-signatures/calc-sig dynamics/natives
+signature
+  sorts Value
+  sort aliases
+    Env = Map(ID, Value)
+  constructors
+    IntV  : Int -> Value
+    BoolV : Bool -> Value
+    ClosV : ID * Exp * Env -> Value
+  components
+    E : Env
+  arrows
+    Program -init-> Value
+    Exp --> Value
+    eq(Value, Value) --> Bool
+    ift(Value, Exp, Exp) --> Value
+rules
+  Program(e) -init-> v
+  where E {} |- e --> v
+  
+  E |- Var(x) --> E[x]
+  
+  E |- Fun(x, e) --> ClosV(x, e, E)
+  
+  E |- Let(x, v1, e2) --> v
+  where E {x |--> v1, E} |- e2 --> v
+  
+  App(ClosV(x, e, E), v_arg) --> v
+  where E {x |--> v_arg, E} |- e --> v
+  
+  Int(i) --> IntV(parseI(i))
+  
+  Mul(IntV(i), IntV(j)) --> IntV(mulI(i, j))
+  Div(IntV(i), IntV(j)) --> IntV(mulI(i, j))
+  Sub(IntV(i), IntV(j)) --> IntV(mulI(i, j))
+  Add(IntV(i), IntV(j)) --> IntV(mulI(i, j))
+  
+  Lt(IntV(i), IntV(j)) --> BoolV(ltI(i, j))
+  
+  Eq(v1, v2) --> BoolV(eq(v1, v2))
+  eq(IntV(i), IntV(j)) --> eqI(i, j)
+  
+  If(v1, e2, e3) --> ift(v1, e2, e3)
+  
+  ift(BoolV(true), e2, e3) --> e2
+  ift(BoolV(false), e2, e3) --> e3
+  
+  

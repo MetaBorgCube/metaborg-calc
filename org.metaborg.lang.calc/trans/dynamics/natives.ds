@@ -1,0 +1,11 @@
+module dynamics/natives
+
+signature
+  native operators
+    parseI: String -> Int
+    addI: Int * Int -> Int
+    subI: Int * Int -> Int
+    mulI: Int * Int -> Int
+    divI: Int * Int -> Int
+    ltI : Int * Int -> Bool
+    eqI : Int * Int -> Bool
