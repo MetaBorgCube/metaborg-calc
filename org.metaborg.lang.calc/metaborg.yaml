@@ -1,6 +1,6 @@
 ---
 id: org.example:org.metaborg.lang.calc:0.1.0-SNAPSHOT
-name: calc
+name: Calc
 dependencies:
   compile:
   - org.metaborg:org.metaborg.meta.lang.esv:${metaborgVersion}
