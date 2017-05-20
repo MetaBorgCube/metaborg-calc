@@ -8,12 +8,14 @@ signature
     IntV  : Int -> Value
     BoolV : Bool -> Value
     ClosV : ID * Exp * Env -> Value
+  variables
+    v : Value
   components
     E : Env
   arrows
     Program -init-> Value
     Exp --> Value
-    eq(Value, Value) --> Bool
+    eqv(Value, Value) --> Bool
     ift(Value, Exp, Exp) --> Value
 rules
   Program(e) -init-> v
@@ -32,18 +34,27 @@ rules
   Int(i) --> IntV(parseI(i))
   
   Mul(IntV(i), IntV(j)) --> IntV(mulI(i, j))
-  Div(IntV(i), IntV(j)) --> IntV(mulI(i, j))
-  Sub(IntV(i), IntV(j)) --> IntV(mulI(i, j))
-  Add(IntV(i), IntV(j)) --> IntV(mulI(i, j))
+  Div(IntV(i), IntV(j)) --> IntV(divI(i, j))
+  Sub(IntV(i), IntV(j)) --> IntV(subI(i, j))
+  Add(IntV(i), IntV(j)) --> IntV(addI(i, j))
   
   Lt(IntV(i), IntV(j)) --> BoolV(ltI(i, j))
   
-  Eq(v1, v2) --> BoolV(eq(v1, v2))
-  eq(IntV(i), IntV(j)) --> eqI(i, j)
+  Eq(v1, v2) --> BoolV(eqv(v1, v2))
+  eqv(IntV(i), IntV(j)) --> eqI(i, j)
+  
+  False() --> BoolV(false)
+  True() --> BoolV(true)
   
   If(v1, e2, e3) --> ift(v1, e2, e3)
   
   ift(BoolV(true), e2, e3) --> e2
   ift(BoolV(false), e2, e3) --> e3
+  
+  Not(e) --> If(e, False(), True())
+  And(e1, e2) --> If(e1, e2, False())
+  Or(e1, e2) --> If(e1, True(), e2)
+  Gt(e1, e2) --> Lt(e1, e2)
+  Neq(e1, e2) --> Not(Eq(e1, e2))
   
   
