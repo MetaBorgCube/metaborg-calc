@@ -5,7 +5,7 @@ imports
   libstratego-gpp
   libspoofax/sdf/pp
   libspoofax/editor/refactoring/-
-  //pp/Calc-parenthesize
+  pp/Calc-parenthesize
   pp/Calc-pp
 
 rules
@@ -19,33 +19,33 @@ rules
 
 rules
 
-  parenthesize-calc = id
+  //parenthesize-calc = id
   
-  pp-calc-string =
-    parenthesize-calc
-    ; prettyprint-calc-start-symbols
+  pp-Calc-string =
+    parenthesize-Calc
+    ; prettyprint-Calc-start-symbols
     ; !V([], <id>)
     ; box2text-string(|120)
       
-  pp-partial-calc-string =
-    parenthesize-calc
-    ; prettyprint-calc
+  pp-partial-Calc-string =
+    parenthesize-Calc
+    ; prettyprint-Calc
     ; !V([], <id>)
     ; box2text-string(|120)
     
-  pp-partial-calc-string(|sort) =
-    parenthesize-calc
-    ; prettyprint-calc(|sort)
+  pp-partial-Calc-string(|sort) =
+    parenthesize-Calc
+    ; prettyprint-Calc(|sort)
     ; !V([], <id>)
     ; box2text-string(|120)  
       
   pp-debug :
     ast -> result
     with
-       result := <pp-calc-string> ast
-    <+ <bottomup(try(not(is-string); not(is-list); not(pp-calc-string); debug(!"cannot pp ")))> ast
+       result := <pp-Calc-string> ast
+    <+ <bottomup(try(not(is-string); not(is-list); not(pp-Calc-string); debug(!"cannot pp ")))> ast
     ;  result := ""
 
 rules
   
-  construct-textual-change = construct-textual-change(pp-partial-calc-string, parenthesize, override-reconstruction, resugar)
+  construct-textual-change = construct-textual-change(pp-partial-Calc-string, parenthesize, override-reconstruction, resugar)
