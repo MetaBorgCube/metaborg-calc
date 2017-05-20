@@ -19,7 +19,7 @@ debug:
   typesmart: false
 language:
   sdf:
-    pretty-print: calc
+    pretty-print: Calc
     # If set to java, set the table in editor/Syntax.esv to target/metaborg/sdf-new.tbl
     sdf2table: java
     placeholder:
