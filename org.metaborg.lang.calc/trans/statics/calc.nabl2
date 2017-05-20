@@ -1,8 +1,8 @@
 module statics/calc
 
-imports signatures/Calc-sig
+imports signatures/- 
 
-rules
+rules 
 
   init ^ (s) := new s.
 
