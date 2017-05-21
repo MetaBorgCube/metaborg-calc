@@ -51,10 +51,10 @@ rules
   ift(BoolV(true), e2, e3) --> e2
   ift(BoolV(false), e2, e3) --> e3
   
-  Not(e) --> If(e, False(), True())
-  And(e1, e2) --> If(e1, e2, False())
-  Or(e1, e2) --> If(e1, True(), e2)
-  Gt(e1, e2) --> Lt(e1, e2)
-  Neq(e1, e2) --> Not(Eq(e1, e2))
+//  Not(e) --> If(e, False(), True())
+//  And(e1, e2) --> If(e1, e2, False())
+//  Or(e1, e2) --> If(e1, True(), e2)
+//  Gt(e1, e2) --> Lt(e2, e1)
+//  Neq(e1, e2) --> Not(Eq(e1, e2))
   
   
