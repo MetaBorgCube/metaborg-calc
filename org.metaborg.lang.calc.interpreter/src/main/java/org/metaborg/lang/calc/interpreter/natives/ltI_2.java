@@ -18,7 +18,7 @@ public abstract class ltI_2 extends TermBuild {
 
 	@Specialization
 	public boolean doInt(int left, int right) {
-		return left < right ? true : false;
+		return left < right ;
 	}
 
 	public static TermBuild create(SourceSection source, TermBuild left,

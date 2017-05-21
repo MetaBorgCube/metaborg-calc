@@ -17,7 +17,7 @@ public abstract class ltS_2 extends TermBuild {
 
 	@Specialization
 	public boolean doString(String left, String right) {
-		return left.compareTo(right) < 0 ? true : false;
+		return left.compareTo(right) < 0 ;
 	}
 
 	public static TermBuild create(SourceSection source, TermBuild left, TermBuild right) {
