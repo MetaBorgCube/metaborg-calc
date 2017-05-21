@@ -1,0 +1,15 @@
+let monthly = \rY Y P.
+      let N = Y * 12 in
+        if(rY == 0) // no interest
+          (P / N)
+        else 
+		  let r = rY / 12 in 
+		  let f = (1 + r) ^ N in
+		    (r * P * f) / (f - 1)
+ in		  
+		    
+let rY = 0.05 in  // yearly interest rate
+let Y = 30 in     // number of years
+let P = 200000 in // principal
+ 
+  monthly rY Y P
