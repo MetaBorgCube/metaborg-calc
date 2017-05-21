@@ -12,7 +12,7 @@ public final class DesugarTransform implements ITermTransformer {
 	public IStrategoTerm transform(IStrategoTerm term) {
 		Context ctx = new Context(new ImploderOriginTermFactory(new TermFactory()));
 		org.metaborg.lang.calc.strategies.Main.init(ctx);
-		return org.metaborg.lang.calc.trans.desugar_all_0_0.instance
+		return org.metaborg.lang.calc.trans.desugar_calc_0_0.instance
 				.invoke(ctx, term);
 	}
 } 

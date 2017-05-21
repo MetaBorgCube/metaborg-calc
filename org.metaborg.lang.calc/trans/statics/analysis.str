@@ -5,13 +5,13 @@ imports
   nabl2shared
   nabl2runtime
   transform/desugar
-  statics/calc
+  statics/calc 
 
   pp
 
 rules // Analysis
 
-  editor-analyze = nabl2-analyze(desugar-all)
+  editor-analyze = nabl2-analyze(desugar-calc)
 
 rules // Debugging
   
