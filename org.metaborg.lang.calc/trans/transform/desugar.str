@@ -4,12 +4,12 @@ imports signatures/-
 
 strategies
 
-  desugar-all = innermost(desugar)
+  desugar-calc = debug(!"desugar-all: "); innermost(debug(!"desugar: "); desugar) 
   
 rules
 
-  desugar : Neq(e1, e2) -> Not(Eq(e1, e2))
-  desugar : Gt(e1, e2) -> Lt(e2, e1)
+  desugar : Neq(e1, e2) -> Not(Eq(e1, e2)) 
+  desugar : Gt(e1, e2) -> Lt(e2, e1) where debug(!"Gt: ") 
 
   desugar : Not(e) -> If(e, False(), True())
   desugar : And(e1, e2) -> If(e1, e1, False())

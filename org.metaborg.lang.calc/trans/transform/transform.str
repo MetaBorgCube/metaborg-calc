@@ -12,9 +12,9 @@ rules // Desugaring
   // Desugar 
   desugar-aterm: (selected, _, _, path, project-path) -> (filename, result)
     with filename := <guarantee-extension(|"aterm")> path
-       ; result   := <desugar-all> selected
+       ; result   := <desugar-calc> selected
 
   // Desugar and pretty-print
   desugar-pp: (selected, _, _, path, project-path) -> (filename, result)
     with filename := <guarantee-extension(|"desugared.calc")> path
-       ; result   := <desugar-all; pp-debug> selected
+       ; result   := <desugar-calc; pp-debug> selected
