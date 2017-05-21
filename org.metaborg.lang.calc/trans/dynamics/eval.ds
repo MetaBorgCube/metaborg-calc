@@ -23,7 +23,7 @@ rules
   
   E |- Var(x) --> E[x]
   
-  E |- Fun(x, e) --> ClosV(x, e, E)
+  E |- Fun([x], e) --> ClosV(x, e, E)
   
   E |- Let(x, v1, e2) --> v
   where E {x |--> v1, E} |- e2 --> v
