@@ -13,21 +13,22 @@ rules
   [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
      new s', {x} <- s', {x} : ty, s' -P-> s, [[ e1 ^ (s) : ty1 ]], [[ e2 ^ (s') : ty2 ]].
     
-  [[ Fun(x, e) ^ (s) : FunT(ty1, ty2) ]] :=
+  [[ Fun([x], e) ^ (s) : FunT(ty1, ty2) ]] :=
      new s', {x} <- s', {x} : ty1, s' -P-> s, [[ e ^ (s') : ty2 ]].
      
   [[ App(e1, e2) ^ (s) : ty2 ]] := 
      [[ e1 ^ (s) : FunT(ty1, ty2) ]], [[ e2 ^ (s) : ty1 ]].
     
-  [[ Int(x) ^ (s) : IntT() ]].
+  [[ Num(x) ^ (s) : NumT() ]].
   
-  [[ Mul(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]]. 
-  [[ Add(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]]. 
-  [[ Sub(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].  
-  [[ Div(e1, e2) ^ (s) : IntT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
+  [[ Exp(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
+  [[ Mul(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
+  [[ Add(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
+  [[ Sub(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].  
+  [[ Div(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
    
-  [[ Eq(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
-  [[ Lt(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : IntT() ]], [[ e2 ^ (s) : IntT() ]].
+  [[ Eq(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
+  [[ Lt(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
   
   [[ True() ^ (s) : BoolT() ]].
   [[ False() ^ (s) : BoolT() ]].
