@@ -1,2 +1,4 @@
-let max = (\x. \y. (if(x > y) x else y)) in 
-  ! ( max 3 4 > 5 )
+let max = \x. \y. if(x > y) x else y in 
+let k = 0 in
+let addk = \x. x + k in
+  ! ( max 3 (addk 4) > 5 )
