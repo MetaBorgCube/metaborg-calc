@@ -12,10 +12,11 @@ context-free syntax
     let <ID> = <Exp> 
      in <Exp>
   >
-  Exp.Fun   = <\\ <ID> . <Exp>>
+  Exp.Fun   = <\\ <ID*> . <Exp>>
   Exp.App   = <<Exp> <Exp>> {left}
 
-  Exp.Int   = INT
+  Exp.Num   = NUM
+  Exp.Exp   = <<Exp> ^ <Exp>> {right}
   Exp.Mul   = <<Exp> * <Exp>> {left}
   Exp.Div   = <<Exp> / <Exp>> {left}
   Exp.Sub   = <<Exp> - <Exp>> {left}
@@ -39,13 +40,14 @@ context-free syntax
      <Exp>> 
   
 context-free priorities
-  Exp.App > {left: Exp.Mul Exp.Div} > {left: Exp.Add Exp.Sub} 
+  Exp.App > Exp.Exp > {left: Exp.Mul Exp.Div} 
+  > {left: Exp.Add Exp.Sub} 
   > {non-assoc: Exp.Eq Exp.Neq Exp.Gt Exp.Lt}
   > Exp.Not > Exp.And > Exp.Or > Exp.Let > Exp.Fun
   
 sorts Type
 context-free syntax
-  Type.IntT  = <Int>
+  Type.NumT  = <Num>
   Type.BoolT = <Bool>
   Type.FunT  = [[Exp] -> [Exp]] {right}
 
