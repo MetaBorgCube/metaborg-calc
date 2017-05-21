@@ -9,3 +9,21 @@ signature
     divI: Int * Int -> Int
     ltI : Int * Int -> Bool
     eqI : Int * Int -> Bool
+       
+    parseL: String -> Long
+    expL: Long * Long -> Long
+    addL: Long * Long -> Long
+    subL: Long * Long -> Long
+    mulL: Long * Long -> Long
+    divL: Long * Long -> Long
+    ltL : Long * Long -> Bool
+    eqL : Long * Long -> Bool
+
+    parseF: String -> Float
+    addF: Float * Float -> Float
+    subF: Float * Float -> Float
+    expF: Float * Float -> Float
+    mulF: Float * Float -> Float
+    divF: Float * Float -> Float
+    ltF : Float * Float -> Bool
+    eqF : Float * Float -> Bool
