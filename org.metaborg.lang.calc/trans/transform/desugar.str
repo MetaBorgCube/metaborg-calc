@@ -4,7 +4,7 @@ imports signatures/-
 
 strategies
 
-  desugar-calc = debug(!"desugar-all: "); innermost(debug(!"desugar: "); desugar) 
+  desugar-calc = innermost(desugar) 
   
 rules
 
@@ -14,4 +14,6 @@ rules
   desugar : Not(e) -> If(e, False(), True())
   desugar : And(e1, e2) -> If(e1, e1, False())
   desugar : Or(e1, e2) -> If(e1, True(), e2)
+  
+  desugar : Fun([x | xs@[_|_]], e) -> Fun([x], Fun(xs, e))
   
