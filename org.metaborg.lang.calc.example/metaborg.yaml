@@ -1,9 +1,9 @@
 ---
-id: org.example:org.metaborg.lang.calc.example:0.1.0-SNAPSHOT
-name: calc
+id: org.metaborg:org.metaborg.lang.calc.example:0.1.0-SNAPSHOT
+name: Calc
 dependencies:
   compile:
-  - org.example:org.metaborg.lang.calc:0.1.0-SNAPSHOT
+  - org.metaborg:org.metaborg.lang.calc:0.1.0-SNAPSHOT
 debug:
   typesmart: false
 runtime:
