@@ -9,7 +9,9 @@ src/main/java/org/metaborg/org/metaborg/calc/interpreter/generated/terms/match
 src/test/java/org/metaborg/org/metaborg/calc/interpreter/generated/test
 /Calc.launch
 /TestCalc.launch
+/Calc (Core).launch
 /Calc (Daemon).launch
+/Calc-core
 /Calc-server
 /Calc-client
 /Calc
