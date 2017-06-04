@@ -1,0 +1,21 @@
+module lexical
+
+language Calc
+
+test integer literal [[
+  1
+]] parse succeeds
+
+test float literal [[
+  45.07
+]] parse succeeds
+
+test one [[
+  - 3
+]] parse succeeds
+
+test one [[
+let max = \x. \y. if(x > y) x else y in 
+  ! max 3 4 < x
+]] parse succeeds
+

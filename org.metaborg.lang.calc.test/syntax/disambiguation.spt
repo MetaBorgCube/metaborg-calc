@@ -1,0 +1,58 @@
+module disambiguation
+
+language Calc
+start symbol Program
+
+test plus is left associative [[
+  1 + 2 + 3
+]] parse to [[
+  (1 + 2) + 3
+]]
+
+test power is right associative [[
+  1 ^ 2 ^ 3
+]] parse to [[
+  1 ^ (2 ^ 3)
+]]
+
+test multiplication has higher priority than plus [[
+  1 * 2 + 3
+]] parse to [[
+  (1 * 2) + 3
+]]
+
+test multiplication has higher priority than plus [[
+  1 + 2 * 3
+]] parse to [[
+  1 + (2 * 3)
+]]
+
+test application has higher priority than plus [[
+  f 1 + 2 
+]] parse to [[
+  (f 1) + 2
+]]
+
+test application has higher priority than plus [[
+  f 1 + 2 
+]] parse to [[
+  (f 1) + 2
+]]
+
+test plus has higher priority than if-else [[
+  if(e1) e2 else e3 + e4
+]] parse to [[
+  if(e1) e2 else (e3 + e4)
+]]
+
+//test if-else has higher priority than plus [[
+//  if(e1) e2 else e3 + e4
+//]] parse to [[
+//  (if(e1) e2 else e3) + e4
+//]] // should fail
+
+test disambiguation is safe [[
+  e0 + if(e1) e2 else e3 + e4
+]] parse to [[
+  e0 + (if(e1) e2 else (e3 + e4))
+]]
