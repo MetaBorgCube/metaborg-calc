@@ -1,14 +1,14 @@
-rY = 0.027  // yearly interest rate
-lY = 30      // number of years
-P = 200000 // principal
+rY = 0.027;  // yearly interest rate
+Y = 30;     // number of years
+P = 200000; // principal
 
-N = Y * 12 // number of months
+N = Y * 12; // number of months
 
 c = if(rY == 0) // no interest
-          (P / N)
-        else 
-		  let r = rY / 12 in 
-		  let f = (1 + r) ^ N in
-		    (r * P * f) / (f - 1)
-	    
+      P / N
+    else 
+	  let r = rY / 12 in 
+      let f = (1 + r) ^ N in
+		(r * P * f) / (f - 1);
+	     
 c // payment per month
