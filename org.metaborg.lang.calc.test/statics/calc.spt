@@ -1,6 +1,6 @@
 module calc
 
-language calc
+language Calc
 
 test one [[
 let max = \x. \y. if(x > y) x else y in 
