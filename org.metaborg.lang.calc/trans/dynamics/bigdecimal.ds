@@ -1,0 +1,30 @@
+module dynamics/bigdecimal
+
+//signature
+//  native datatypes
+//  
+//    "java.math.MathContext" as MathContext { }
+//    
+//    "java.math.BigDecimal" as BigDecimal { 
+//      abs : BigDecimal 
+//      add : BigDecimal -> BigDecimal
+//      //add : BigDecimal * MathContext -> BigDecimal
+//    } 
+//    
+//    arrows 
+//      addDB(BigDecimal, BigDecimal) --> BigDecimal
+//rules
+//  addDB(i, j) --> add[i](j)
+
+signature      
+  native datatypes  
+    "java.math.BigDecimal" as BigDecimal { }
+  native operators
+    parseB : String -> BigDecimal 
+    addB : BigDecimal * BigDecimal -> BigDecimal
+    powB : BigDecimal * BigDecimal -> BigDecimal
+    subB : BigDecimal * BigDecimal -> BigDecimal
+    mulB : BigDecimal * BigDecimal -> BigDecimal
+    divB : BigDecimal * BigDecimal -> BigDecimal
+    ltB  : BigDecimal * BigDecimal -> Bool
+    eqB  : BigDecimal * BigDecimal -> Bool
