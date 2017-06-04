@@ -7,7 +7,7 @@ context-free syntax
 
   Program.Program = <<{Stat ";\n"}+>>
   
-  Stat = Exp
+  Stat.Exp  = Exp
   Stat.Bind = <<ID> = <Exp>>
   
 context-free syntax // numbers
