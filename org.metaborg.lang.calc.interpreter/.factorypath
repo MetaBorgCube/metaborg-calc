@@ -7,6 +7,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.java/2.3.0-SNAPSHOT/org.spoofax.interpreter.library.java-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.index/2.3.0-SNAPSHOT/org.spoofax.interpreter.library.index-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.jsglr/2.3.0-SNAPSHOT/org.spoofax.jsglr-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/sdf2table/2.3.0-SNAPSHOT/sdf2table-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.jsglr/2.3.0-SNAPSHOT/org.spoofax.interpreter.library.jsglr-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/strategoxt-min-jar/2.3.0-SNAPSHOT/strategoxt-min-jar-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.metaborg.core/2.3.0-SNAPSHOT/org.metaborg.core-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
