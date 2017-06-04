@@ -8,8 +8,10 @@ strategies
   
 rules
 
+  desugar : Min(e) -> Sub(Num("0"), e)
+  
   desugar : Neq(e1, e2) -> Not(Eq(e1, e2)) 
-  desugar : Gt(e1, e2) -> Lt(e2, e1) where debug(!"Gt: ") 
+  desugar : Gt(e1, e2) -> Lt(e2, e1)
 
   desugar : Not(e) -> If(e, False(), True())
   desugar : And(e1, e2) -> If(e1, e1, False())
