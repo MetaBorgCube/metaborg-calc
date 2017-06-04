@@ -1,0 +1,9 @@
+module Transformation
+
+menus
+
+  menu: "Desugar" (openeditor)
+  
+    action: "Desugar" = desugar-pp (source)
+    action: "Desugar (AST)" = desugar-aterm (source)
+ 

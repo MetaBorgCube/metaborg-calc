@@ -20,12 +20,7 @@ menus
     
     action: "Format"          = editor-format (source)
     action: "Show parsed AST" = debug-show-aterm (source)
-
-  menu: "Desugar" (openeditor)
-  
-    action: "Desugar" = desugar-pp (source)
-    action: "Desugar (AST)" = desugar-aterm (source)
-    
+ 
 views
   
   outline view: editor-outline (source)
