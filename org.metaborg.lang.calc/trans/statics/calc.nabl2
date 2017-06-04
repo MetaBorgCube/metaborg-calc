@@ -11,16 +11,19 @@ rules
   Stats[[ [] ^ (s) ]].
   
   Stats[[ [ stat | stats ] ^ (s) ]] :=
-    new s_nxt, s_nxt ---> s,
     Stat[[ stat ^ (s, s_nxt) ]],
     Stats[[ stats ^ (s_nxt) ]].
     
-  Stat[[ Bind(x, e) ^ (s, s_nxt) ]] := 
+  Stat[[ Bind(x, e) ^ (s, s') ]] := 
+    s' == s_nxt,
+    new s_nxt, s_nxt ---> s,
     {x} <- s_nxt, {x} : ty,
     [[ e ^ (s) : ty ]].
     
-  Stat[[ e ^ (s, s_nxt) ]] := [[ e ^ (s) : ty ]].
-    
+  Stat[[ Exp(e) ^ (s, s_nxt) ]] := 
+    s == s_nxt,
+    [[ e ^ (s) : ty ]].
+
 rules // numbers
     
   [[ Num(x) ^ (s) : NumT() ]].
