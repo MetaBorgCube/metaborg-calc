@@ -6,32 +6,71 @@ rules
 
   init ^ (s) := new s.
 
-  [[ Program(e) ^ (s) ]] := [[ e ^ (s) : t ]].
+  [[ Program(stats) ^ (s) ]] := Stats[[ stats ^ (s) ]].
+  
+  Stats[[ [] ^ (s) ]].
+  
+  Stats[[ [ stat | stats ] ^ (s) ]] :=
+    new s_nxt, s_nxt ---> s,
+    Stat[[ stat ^ (s, s_nxt) ]],
+    Stats[[ stats ^ (s_nxt) ]].
     
-  [[ Var(x) ^ (s) : ty ]] := {x} -> s, {x} |-> d, d : ty.
+  Stat[[ Bind(x, e) ^ (s, s_nxt) ]] := 
+    {x} <- s_nxt, {x} : ty,
+    [[ e ^ (s) : ty ]].
     
-  [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
-     new s', {x} <- s', {x} : ty, s' -P-> s, [[ e1 ^ (s) : ty1 ]], [[ e2 ^ (s') : ty2 ]].
+  Stat[[ e ^ (s, s_nxt) ]] := [[ e ^ (s) : ty ]].
     
-  [[ Fun([x], e) ^ (s) : FunT(ty1, ty2) ]] :=
-     new s', {x} <- s', {x} : ty1, s' -P-> s, [[ e ^ (s') : ty2 ]].
-     
-  [[ App(e1, e2) ^ (s) : ty2 ]] := 
-     [[ e1 ^ (s) : FunT(ty1, ty2) ]], [[ e2 ^ (s) : ty1 ]].
+rules // numbers
     
   [[ Num(x) ^ (s) : NumT() ]].
   
-  [[ Exp(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
-  [[ Mul(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
-  [[ Add(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]]. 
-  [[ Sub(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].  
-  [[ Div(e1, e2) ^ (s) : NumT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
+  [[ Pow(e1, e2) ^ (s) : NumT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]]. 
+  [[ Mul(e1, e2) ^ (s) : NumT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]]. 
+  [[ Add(e1, e2) ^ (s) : NumT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]]. 
+  [[ Sub(e1, e2) ^ (s) : NumT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]].  
+  [[ Div(e1, e2) ^ (s) : NumT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]].
    
-  [[ Eq(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
-  [[ Lt(e1, e2) ^ (s)  : BoolT() ]] := [[ e1 ^ (s) : NumT() ]], [[ e2 ^ (s) : NumT() ]].
+  [[ Eq(e1, e2) ^ (s)  : BoolT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]].
+  [[ Lt(e1, e2) ^ (s)  : BoolT() ]] := 
+     [[ e1 ^ (s) : NumT() ]], 
+     [[ e2 ^ (s) : NumT() ]].
+
+rules // booleans
   
-  [[ True() ^ (s) : BoolT() ]].
+  [[ True()  ^ (s) : BoolT() ]].
   [[ False() ^ (s) : BoolT() ]].
   
   [[ If(e1, e2, e3) ^ (s)  : BoolT() ]] := 
-     [[ e1 ^ (s) : BoolT() ]], [[ e2 ^ (s) : t ]], [[ e3 ^ (s) : t ]].
+     [[ e1 ^ (s) : BoolT() ]], 
+     [[ e2 ^ (s) : t ]], 
+     [[ e3 ^ (s) : t ]].
+
+rules // variables and functions
+
+  [[ Var(x) ^ (s) : ty ]] := {x} -> s, {x} |-> d, d : ty.
+    
+  [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
+     new s', {x} <- s', {x} : ty, s' -P-> s, 
+     [[ e1 ^ (s)  : ty ]], 
+     [[ e2 ^ (s') : ty2 ]].
+    
+  [[ Fun([x], e) ^ (s) : FunT(ty1, ty2) ]] :=
+     new s', {x} <- s', {x} : ty1, s' -P-> s, 
+     [[ e ^ (s') : ty2 ]].
+     
+  [[ App(e1, e2) ^ (s) : ty2 ]] := 
+     [[ e1 ^ (s) : FunT(ty1, ty2) ]], 
+     [[ e2 ^ (s) : ty1 ]].
