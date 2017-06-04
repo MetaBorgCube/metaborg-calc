@@ -1,31 +1,33 @@
 module Calc
-imports Common
+imports CalcLexical
 context-free start-symbols Program
+
 sorts Program Exp
 context-free syntax    
-  Program.Program = Exp
+
+  Program.Program = <<{Stat ";\n"}+>>
+  
+  Stat = Exp
+  Stat.Bind = <<ID> = <Exp>>
+  
+context-free syntax // numbers
   
   Exp = <(<Exp>)> {bracket}
-  
-  Exp.Var = ID
-  Exp.Let = <
-    let <ID> = <Exp> 
-     in <Exp>
-  >
-  Exp.Fun   = <\\ <ID*> . <Exp>>
-  Exp.App   = <<Exp> <Exp>> {left}
 
-  Exp.Num   = NUM
-  Exp.Exp   = <<Exp> ^ <Exp>> {right}
-  Exp.Mul   = <<Exp> * <Exp>> {left}
-  Exp.Div   = <<Exp> / <Exp>> {left}
-  Exp.Sub   = <<Exp> - <Exp>> {left}
-  Exp.Add   = <<Exp> + <Exp>> {left}
+  Exp.Num = NUM
+  Exp.Min = <-<Exp>>
+  Exp.Pow = <<Exp> ^ <Exp>> {right}
+  Exp.Mul = <<Exp> * <Exp>> {left}
+  Exp.Div = <<Exp> / <Exp>> {left}
+  Exp.Sub = <<Exp> - <Exp>> {left, prefer}
+  Exp.Add = <<Exp> + <Exp>> {left}
   
-  Exp.Eq    = <<Exp> == <Exp>> {non-assoc}
-  Exp.Neq   = <<Exp> != <Exp>> {non-assoc}
-  Exp.Gt    = [[Exp] > [Exp]]  {non-assoc}
-  Exp.Lt    = [[Exp] < [Exp]]  {non-assoc}
+  Exp.Eq  = <<Exp> == <Exp>> {non-assoc}
+  Exp.Neq = <<Exp> != <Exp>> {non-assoc}
+  Exp.Gt  = [[Exp] > [Exp]]  {non-assoc}
+  Exp.Lt  = [[Exp] < [Exp]]  {non-assoc}
+
+context-free syntax // booleans
 
   Exp.True  = <true>
   Exp.False = <false>
@@ -33,24 +35,43 @@ context-free syntax
   Exp.And   = <<Exp> & <Exp>> {left}
   Exp.Or    = <<Exp> | <Exp>> {left}
   
-  Exp.If =   
-  <if(<Exp>)
-     <Exp> 
-   else 
-     <Exp>> 
+  Exp.If = <  
+    if(<Exp>)
+      <Exp> 
+    else 
+      <Exp>
+  > 
+
+context-free syntax // variables and functions
+
+  Exp.Var = ID
+  Exp.Let = <
+    let <ID> = <Exp> in
+    <Exp>
+  >
+  Exp.Fun = <\\ <ID*> . <Exp>>
+  Exp.App = <<Exp> <Exp>> {left}
   
 context-free priorities
-  Exp.App > Exp.Exp > {left: Exp.Mul Exp.Div} 
+  Exp.Min
+  > Exp.App 
+  > Exp.Pow 
+  > {left: Exp.Mul Exp.Div} 
   > {left: Exp.Add Exp.Sub} 
   > {non-assoc: Exp.Eq Exp.Neq Exp.Gt Exp.Lt}
-  > Exp.Not > Exp.And > Exp.Or > Exp.Let > Exp.Fun
+  > Exp.Not 
+  > Exp.And 
+  > Exp.Or 
+  > Exp.If
+  > Exp.Let 
+  > Exp.Fun
   
 sorts Type
 context-free syntax
   Type.NumT  = <Num>
   Type.BoolT = <Bool>
   Type.FunT  = [[Exp] -> [Exp]] {right}
+  Type       = <(<Type>)> {bracket}
 
 template options
-
   ID = keyword {reject}
