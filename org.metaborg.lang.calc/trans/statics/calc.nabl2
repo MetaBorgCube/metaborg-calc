@@ -6,7 +6,9 @@ rules
 
   init ^ (s) := new s.
 
-  [[ Program(stats) ^ (s) ]] := Stats[[ stats ^ (s) ]].
+  [[ Program(stats) ^ (s) ]] := 
+    new s', s' ---> s,
+    Stats[[ stats ^ (s') ]].
   
   Stats[[ [] ^ (s) ]].
   
@@ -17,7 +19,8 @@ rules
   Stat[[ Bind(x, e) ^ (s, s') ]] := 
     s' == s_nxt,
     new s_nxt, s_nxt ---> s,
-    {x} <- s_nxt, {x} : ty,
+    {x} <- s_nxt, {x} : ty_gen,
+    ty_gen genOf ty,
     [[ e ^ (s) : ty ]].
     
   Stat[[ Exp(e) ^ (s, s_nxt) ]] := 
@@ -56,14 +59,16 @@ rules // booleans
   [[ True()  ^ (s) : BoolT() ]].
   [[ False() ^ (s) : BoolT() ]].
   
-  [[ If(e1, e2, e3) ^ (s)  : BoolT() ]] := 
+  [[ If(e1, e2, e3) ^ (s) : ty2 ]] := 
      [[ e1 ^ (s) : BoolT() ]], 
-     [[ e2 ^ (s) : t ]], 
-     [[ e3 ^ (s) : t ]].
+     [[ e2 ^ (s) : ty2 ]], 
+     [[ e3 ^ (s) : ty3 ]],
+     ty2 == ty3 | error $[branches should have same type] @ e2.
 
 rules // variables and functions
 
-  [[ Var(x) ^ (s) : ty ]] := {x} -> s, {x} |-> d, d : ty.
+  [[ Var(x) ^ (s) : ty ]] := 
+    {x} -> s, {x} |-> d, d : ty_gen, ty instOf ty_gen.
     
   [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
      new s', {x} <- s', {x} : ty, s' -P-> s, 
