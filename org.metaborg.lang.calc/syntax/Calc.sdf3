@@ -1,15 +1,16 @@
 module Calc
 imports CalcLexical
 context-free start-symbols Program Exp
-
-sorts Program Exp
+  
+sorts Program 
 context-free syntax    
 
-  Program.Program = <<{Stat ";\n"}+>>
+  Program.Program = <<{Stat "\n"}+>>
   
-  Stat.Exp  = Exp
-  Stat.Bind = <<ID> = <Exp>>
+  Stat.Exp  = <<Exp>;>
+  Stat.Bind = <<ID> = <Exp>;>
   
+sorts Exp
 context-free syntax // numbers
   
   Exp = <(<Exp>)> {bracket}
@@ -51,7 +52,7 @@ context-free syntax // variables and functions
   >
   Exp.Fun = <\\ <ID+> . <Exp>>
   Exp.App = <<Exp> <Exp>> {left}
-  
+   
 context-free priorities
   Exp.Min
   > Exp.App 
@@ -65,7 +66,7 @@ context-free priorities
   > Exp.If
   > Exp.Let 
   > Exp.Fun
-  
+
 sorts Type
 context-free syntax
   Type.NumT  = <Num>
