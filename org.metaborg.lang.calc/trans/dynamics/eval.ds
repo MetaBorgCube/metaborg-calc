@@ -14,6 +14,8 @@ signature
     E : Env
   arrows
     Program -init-> Value
+    List(Stat) --> Value
+    Stat --> (Value * Env)
     Exp --> Value
 rules
   Program(e) -init-> v
@@ -44,6 +46,18 @@ rules // booleans
   
   ift(BoolV(true), e2, _) --> e2
   ift(BoolV(false), _, e3) --> e3
+  
+rules // top-level statements
+
+  [stat] : List(Stat) --> v
+  where stat --> (v, _)
+    
+  [stat | stats@[_|_]] : List(Stat) --> v
+  where stat --> (_, E); E |- stats --> v
+  
+  E |- Bind(x, v) --> (v, {x |--> v, E})
+  
+  E |- Exp(v) --> (v, E)
  
 rules // variables and functions
   
