@@ -16,7 +16,9 @@ public abstract class printB_1 extends TermBuild {
 
 	@Specialization
 	public String doString(java.math.BigDecimal b) {
-		return b.toString();
+		String s = b.toString();
+		System.out.println(s);
+		return s;
 	}
 
 	public static TermBuild create(SourceSection source, TermBuild stringbuild) {
