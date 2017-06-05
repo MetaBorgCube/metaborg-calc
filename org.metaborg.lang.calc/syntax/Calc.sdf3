@@ -1,6 +1,6 @@
 module Calc
 imports CalcLexical
-context-free start-symbols Program
+context-free start-symbols Program Exp
 
 sorts Program Exp
 context-free syntax    
