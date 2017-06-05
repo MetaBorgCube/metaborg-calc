@@ -1,4 +1,4 @@
 let x = 130 in
 let y = 66.37777 in
 let z = 3 in
-  (x + y) ^ z < 3
+  (x + y) ^ z < 3;
