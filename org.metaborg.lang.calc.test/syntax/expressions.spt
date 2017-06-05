@@ -2,21 +2,26 @@ module expressions
 
 language Calc
 
+start symbol Exp
+
+test nullary function not supported [[
+  \ . 4
+]] parse fails
+
 test parentheses [[
   (1 + 3) * 4
-]] parse to Program(Mul(Add(Num("1"),Num("3")),Num("4")))
+]] parse to Mul(Add(Num("1"),Num("3")),Num("4"))
    
 test addition, multiplication, power [[
   1 + 3 * 4 ^ 5
-]] parse to Program(
-     Add(Num("1"),Mul(Num("3"),Pow(Num("4"),Num("5"))))
-   )
+]] parse to Add(Num("1"), Mul(Num("3"), Pow(Num("4"), Num("5"))))
+
 
 test subtract [[
   1 - 2
-]] parse to Program(Sub(Num("1"),Num("2")))
+]] parse to Sub(Num("1"),Num("2"))
    
 test subtract, minus [[
   1 - - 2
-]] parse to Program(Sub(Num("1"),Min(Num("2"))))
+]] parse to Sub(Num("1"),Min(Num("2")))
    

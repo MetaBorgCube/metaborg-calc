@@ -1,8 +1,47 @@
-module calc
+module statics
 
 language Calc
 
-test one [[
-let max = \x. \y. if(x > y) x else y in 
-  ! max 3 4 < x
-]] check has 2 error
+//test one [[
+//let max = \x. \y. if(x > y) x else y in 
+//  ! max 3 4 < x
+//]] 0 errors
+
+
+test poly [[
+  id = \ x . x;
+
+  a = id true;
+
+  b = id 3;
+]] analysis succeeds 
+
+
+test desugar n-ary functions [[
+  \ x y . x;
+]] transform "Desugar (AST)" 
+to Program([Exp(Fun(["x"],Fun(["y"],Var("x"))))])
+
+test poly2 [[
+	id = \ x . x;
+	f = \ x . x + 1;
+	a = id true;
+	b = id 3,000.5;
+	c = id id;
+	d = c 7;
+	e = c true;
+	idf = id f;
+	g = idf 5.0; 
+]] analysis succeeds
+
+test if [[
+  max = \x  y. if(x > y) x else y; 
+]]
+
+//test max [[
+//	max = \x  y. if(x > y) x else y;	
+//	k = 0;	
+//	addk = (\x. x + k);	 
+//	! (max 3 (addk 4) == true);
+//]] analysis succeeds 
+ 

@@ -1,0 +1,24 @@
+module desugar
+
+language Calc
+ 
+test desugar not [[
+  ! a
+]] transform "Desugar (AST)" 
+to Program([Exp(If(Var("a"), False(), True()))])
+ 
+test desugar or [[
+  a | x
+]] transform "Desugar (AST)" 
+to Program([Exp(If(Var("a"), True(), Var("x")))])
+ 
+test desugar and [[
+  a & x
+]] transform "Desugar (AST)" 
+to Program([Exp(If(Var("a"), Var("x"), False()))])
+
+test desugar n-ary function [[
+  \ x y . x
+]] transform "Desugar (AST)" 
+to Program([Exp(Fun(["x"], Fun(["y"], Var("x"))))])
+
