@@ -49,7 +49,7 @@ context-free syntax // variables and functions
     let <ID> = <Exp> in
     <Exp>
   >
-  Exp.Fun = <\\ <ID*> . <Exp>>
+  Exp.Fun = <\\ <ID+> . <Exp>>
   Exp.App = <<Exp> <Exp>> {left}
   
 context-free priorities
