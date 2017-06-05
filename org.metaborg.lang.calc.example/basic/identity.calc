@@ -1,0 +1,17 @@
+id = \ x . x;
+
+f = \ x . x + 1;
+
+a = id true;
+
+b = id 3,000.5;
+
+c = id id;
+
+d = c 7;
+
+e = c true;
+
+idf = id f;
+ 
+g = idf 5.0;
