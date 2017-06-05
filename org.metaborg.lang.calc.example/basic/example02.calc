@@ -2,8 +2,7 @@ max = \x  y. if(x > y) x else y;
 
 k = 0;
 
-addk = (\x. x + k);
+addk = \x. x + k; 
  
-! max 3 (addk 4) == 6
+! (max 3 (addk 4) == 6);
   
- 
