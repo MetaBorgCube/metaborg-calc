@@ -53,7 +53,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.19.1</version>
         <configuration>
-          <argLine>-Xss8m -ea</argLine>
+          <argLine>-Xss8m </argLine>
         </configuration>
       </plugin>
     </plugins>
@@ -80,6 +80,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       </snapshots>
     </repository>
   </repositories>
+  <properties>
+    <slf4j.version>1.7.10</slf4j.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.metaborg</groupId>
@@ -106,6 +109,22 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <groupId>com.martiansoftware</groupId>
       <artifactId>nailgun-server</artifactId>
       <version>0.9.1</version>
+    </dependency>
+    <!-- Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.1.2</version>
     </dependency>
   </dependencies>
 </project>
