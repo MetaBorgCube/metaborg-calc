@@ -2,7 +2,7 @@ module Calc
 imports CalcLexical
 context-free start-symbols Program Exp
   
-sorts Program 
+sorts Program Stat
 context-free syntax    
 
   Program.Program = <<{Stat "\n"}+>>
