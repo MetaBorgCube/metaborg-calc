@@ -117,9 +117,13 @@ rules // variables and functions
   exp-to-java : Var(x) -> $[[x]]
   
   exp-to-java : 
-    Let(x, e1, e2) -> je
+    Let(x, e1, e2) -> $[(([jty]) [x] -> [je2]).apply([je1])]
     with
-      <exp-to-java> App(Fun([x], e2), e1) => je
+      <nabl2-get-ast-type> e1 => ty1
+    ; <nabl2-get-ast-type> e2 => ty2
+    ; <type-to-java> FunT(ty1, ty2) => jty
+    ; <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
   
   exp-to-java :
     f@Fun([x], e) -> $[(([jty]) [x] -> [je])]
