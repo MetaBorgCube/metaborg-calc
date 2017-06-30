@@ -8,8 +8,8 @@ imports
   pp
   codegen/java
 //  codegen/java-concrete
-  pp/metaborg-java-parenthesize
-  pp/metaborg-java-pp
+//  pp/metaborg-java-parenthesize
+//  pp/metaborg-java-pp
   
   
 rules // Desugaring
