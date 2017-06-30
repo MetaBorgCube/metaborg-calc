@@ -2,8 +2,9 @@ module Transformation
 
 menus
 
-  menu: "Desugar" (openeditor)
+  menu: "Transform" (openeditor)
   
     action: "Desugar" = desugar-pp (source)
     action: "Desugar (AST)" = desugar-aterm (source)
+    action: "Generate Java" = generate-java
  

@@ -2,7 +2,7 @@ module outline
 
 imports
   
-  signatures/calc-sig
+  signatures/Calc-sig
   libspoofax/editor/outline
 
 rules

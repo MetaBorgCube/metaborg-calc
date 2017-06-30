@@ -6,17 +6,21 @@ imports
 
 rules // programs
 
-  program-to-java : 
-    Program(stats) -> $[import java.math.BigDecimal;
-                        import java.util.Function;
+  program-to-java(|filename) : 
+    Program(stats) -> $<import java.math.BigDecimal;
+                        import java.math.RoundingMode;
+                        import java.util.function.Function;
                         
-                        public class Program {
-                          public static [jty] eval() {
-                            [jstats]
-                            return [je];
+                        public class <filename> {
+                          public static void main(String[] args) {
+                              System.out.println(eval());
+                          }
+                          public static <jty> eval() {
+                            <jstats>
+                            return <je>;
                           }
                         }
-                       ]
+                       >
     with
       <last> stats => last
     ; <return-type; type-to-java> last => jty
@@ -56,7 +60,7 @@ rules // statements
                     
 rules // numbers
 
-  exp-to-java : Num(v) -> $[BigDecimal.valueOf([v])]
+  exp-to-java : Num(v) -> $[new BigDecimal("[v]")]
 
   exp-to-java :
     Add(e1, e2) -> $[[je1].add([je2])]
@@ -77,7 +81,7 @@ rules // numbers
     ; <exp-to-java> e2 => je2
 
   exp-to-java :
-    Div(e1, e2) -> $[[je1].divide([je2])]
+    Div(e1, e2) -> $[[je1].divide([je2], 50, RoundingMode.HALF_UP)]
     with
       <exp-to-java> e1 => je1
     ; <exp-to-java> e2 => je2
@@ -141,7 +145,7 @@ rules // variables and functions
 rules // types
 
   type-to-java : NumT() -> $[BigDecimal]
-  type-to-java : BoolT() -> $[boolean]
+  type-to-java : BoolT() -> $[Boolean]
   
   type-to-java : 
     FunT(ty1, ty2) -> $[Function<[jty1], [jty2]>]
