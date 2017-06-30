@@ -12,4 +12,4 @@ let rY = 0.05 in  // yearly interest rate
 let Y  = 30 in     // number of years
 let P  = 200000 in // principal
  
-  monthly rY Y P
+  monthly rY Y P;
