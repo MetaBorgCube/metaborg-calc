@@ -1,5 +1,7 @@
 /.project
+/.classpath
 /.settings
+/.factorypath
 /target
 /content.jar
 /artifacts.jar
