@@ -2,4 +2,4 @@ let max = (\ x . \ y . if(x > y)
   x
 else
   y)
- in max 3 4
+ in max 3 4;
