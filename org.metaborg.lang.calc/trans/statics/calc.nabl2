@@ -2,6 +2,13 @@ module statics/calc
 
 imports signatures/- 
 
+signature
+
+  constraint generator
+    [[ Program ^ (scope) ]]
+    [[ Exp ^ (scope) : Type ]]
+    Stat[[ Stat ^ (scope, scope) ]]
+
 rules 
 
   init ^ (s) := new s.
@@ -19,8 +26,7 @@ rules
   Stat[[ Bind(x, e) ^ (s, s') ]] := 
     s' == s_nxt,
     new s_nxt, s_nxt ---> s,
-    {x} <- s_nxt, {x} : ty_gen,
-    ty_gen genOf ty,
+    {x} <- s_nxt, {x} genOf ty,
     [[ e ^ (s) : ty ]].
     
   Stat[[ Exp(e) ^ (s, s_nxt) ]] := 
@@ -68,7 +74,7 @@ rules // booleans
 rules // variables and functions
 
   [[ Var(x) ^ (s) : ty ]] := 
-    {x} -> s, {x} |-> d, d : ty_gen, ty instOf ty_gen.
+    {x} -> s, {x} |-> d, ty instOf d.
     
   [[ Let(x, e1, e2) ^ (s) : ty2 ]] := 
      new s', {x} <- s', {x} : ty, s' -P-> s, 
