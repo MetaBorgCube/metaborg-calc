@@ -1,2 +1,5 @@
 module calc
+imports nabl2/runtime/interpreter/scopegraph-api
+imports nabl2/runtime/interpreter/scopegraph-impl
 imports dynamics/eval
+imports statics/calc
