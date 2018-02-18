@@ -1,0 +1,181 @@
+module codegen/java-concrete
+
+imports 
+  signatures/-
+  nabl2/api
+
+rules // programs
+
+  program-to-java(|filename) : 
+    Program(stats) -> compilation-unit |[ import java.math.BigDecimal;
+                                          import java.math.RoundingMode;
+                                          import java.util.function.Function;
+                                          
+                                          public class ~id:filename {
+                                            public static void main(String[] args) {
+                                                System.out.println(eval());
+                                            }
+                                            public static ~type:jty eval() {
+                                              ~bstm*:jstatsAll
+                                            }
+                                          }
+                                          ]|
+    with
+      <last> stats => last
+    ; <return-type; type-to-unann-type-java> last => jty
+    ; <return-exp> last => re
+    ; <stats-to-java> stats => jstats*
+    ; ![jstats*,  re] => jstatsAll
+
+  
+  return-type : 
+    Bind(_, e) -> ty
+    with
+      <nabl2-get-ast-type> e => ty
+  
+  return-type : 
+    Exp(e) -> ty
+    with
+      <nabl2-get-ast-type> e => ty
+    
+  return-exp : 
+    Bind(x, _) -> stm |[ return ~expr:exp ; ]|
+    with
+      <exp-to-java> Var(x) => exp
+      
+  return-exp : 
+    Exp(e)  -> stm |[ return ~expr:exp ; ]|
+    with
+      <exp-to-java> e => exp
+      
+rules // statements
+
+  stats-to-java :
+    [Bind(x, e) | stats] -> bstm* |[ final ~type:jty ~id:x' = ~expr:je;
+                                    ~bstm*:jstats ]|
+    //$[final [jty] [x] = [je];
+                              //[jstats]]
+    with
+      <nabl2-get-ast-type> e => ty
+    ; <type-to-unann-type-java> ty => jty
+    ; <exp-to-java> e => je
+    ; <stats-to-java> stats => jstats
+    ; <strip-annos> x => x'
+    
+
+  stats-to-java :
+    [Exp(_) | stats] -> jstats
+    with
+      <stats-to-java> stats => jstats
+                     
+  stats-to-java : []  -> bstm* |[ ]|
+                    
+rules // numbers
+
+  exp-to-java : Num(v) -> expr |[new BigDecimal(~strlit:v')]|
+     with
+     <double-quote> v => v'
+     
+  exp-to-java :
+    Add(e1, e2) -> expr |[~expr:je1.add(~expr:je2)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+    
+  exp-to-java :
+    Sub(e1, e2) -> expr |[~expr:je1.subtract(~expr:je2)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+  exp-to-java :
+    Mul(e1, e2) -> expr |[~expr:je1.multiply(~expr:je2)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+  exp-to-java :
+    Div(e1, e2) -> expr |[~expr:je1.divide(~expr:je2, 50, RoundingMode.HALF_UP)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+  exp-to-java :
+    Pow(e1, e2) -> expr |[~expr:je1.pow(~expr:je2.intValueExact())]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+  exp-to-java :
+    Eq(e1, e2) -> expr |[(~expr:je1.compareTo(~expr:je2) == 0)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+  exp-to-java :
+    Lt(e1, e2) -> expr |[(~expr:je1.compareTo(~expr:je2) < 0)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+rules // booleans
+
+  exp-to-java : True() -> expr |[true]|
+  exp-to-java : False() -> expr |[false]|
+
+  exp-to-java : 
+    If(e1, e2, e3) -> expr |[(~expr:je1 ? ~expr:je2 : ~expr:je3)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+    ; <exp-to-java> e3 => je3
+      
+rules // variables and functions
+   
+  exp-to-java : Var(x) -> expr |[ ~id:x' ]|
+    with
+      <strip-annos> x => x'
+  
+  // need to use extra parenthesis for next two rules because safe disambiguation is not supported in mixed tables
+  exp-to-java : 
+    Let(x, e1, e2) ->  expr |[((~rtype:jty) (~id:x' -> ~expr:je2)).apply(~expr:je1)]|
+    with
+      <nabl2-get-ast-type> e1 => ty1
+    ; <nabl2-get-ast-type> e2 => ty2
+    ; <type-to-java> FunT(ty1, ty2) => jty
+    ; <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+    ; <strip-annos> x => x'
+  
+  exp-to-java :
+    f@Fun([x], e) -> expr |[((~rtype:jty) (~id:x -> ~expr:je))]|
+    with
+      <nabl2-get-ast-type> f => ty
+    ; <type-to-java> ty => jty
+    ; <exp-to-java> e => je
+    
+  exp-to-java:
+    App(e1, e2) -> expr |[~expr:e1.apply(~expr:e2)]|
+    with
+      <exp-to-java> e1 => je1
+    ; <exp-to-java> e2 => je2
+
+rules // types
+
+  type-to-java : NumT() ->  rtype |[BigDecimal]|
+  type-to-java : BoolT() -> rtype |[Boolean]|
+  
+  type-to-java : 
+    FunT(ty1, ty2) -> rtype |[Function<~rtype:jty1, ~rtype:jty2>]|
+    with 
+      <type-to-java> ty1 => jty1 
+    ; <type-to-java> ty2 => jty2
+    
+  type-to-unann-type-java : NumT() ->  type |[BigDecimal]|
+  type-to-unann-type-java : BoolT() -> type |[Boolean]|
+  
+  type-to-unann-type-java : 
+    FunT(ty1, ty2) -> type |[Function<~rtype:jty1, ~rtype:jty2>]|
+    with 
+      <type-to-java> ty1 => jty1 
+    ; <type-to-java> ty2 => jty2  
