@@ -7,10 +7,10 @@ imports
   statics/calc
   pp
   codegen/java
-//  codegen/java-concrete
-//  pp/metaborg-java-parenthesize
-//  pp/metaborg-java-pp
-  
+  codegen/java-concrete
+  pp/metaborg-java-parenthesize
+  pp/metaborg-java-pp
+  libstratego-gpp  
   
 rules // Desugaring
   
@@ -27,13 +27,13 @@ rules // Desugaring
   // Compile to java
   generate-java : (selected, _, _, path, project-path) -> (filename, result)
     with filename := <guarantee-extension(|"java")> path     
-       ; result   := <program-to-java(|<base-filename; remove-extension> filename)> selected
-//       ; result   := <program-to-java(|<base-filename; remove-extension> filename); pp-java-string> selected
+       ; result   := <program-to-java(|<base-filename; remove-extension> filename); pp-java-string> selected
 
 // to pretty print Java AST nodes       
-//rules
-//  pp-java-string =
-//    parenthesize-metaborg-java
-//    ; prettyprint-metaborg-java-start-symbols
-//    ; !V([], <id>)
-//    ; box2text-string(|120)       
+rules
+
+  pp-java-string =
+    parenthesize-metaborg-java
+    ; prettyprint-metaborg-java-start-symbols
+    ; !V([], <id>)
+    ; box2text-string(|120)       
